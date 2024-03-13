@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script type="module" src="js/main.js" defer></script>
+    <link
+      rel="icon"
+      type="image/png"
+      href="media/native_logo_trans.png"
+      id="favicon"
+    />
+    <script src="/js/settings.js" defer></script>
+    <script src="/./js/particles.js" defer></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Projects</title>
+  </head>
+  <body theme="main">
+    <div id="particles-js"></div>
+
+    <main>
+      <div class="search-container">
+        <input type="text" id="searchBar" />
+      </div>
+      <div id="favorites">
+        <h1 class="center">Favorites</h1>
+        <div
+          id="favoriteGamesContainer"
+          rel="grow"
+          style="font-family: Ubuntu, sans-serif; font-weight: bold"
+        >
+          <!-- This div will contain the favorite games -->
+        </div>
+      </div>
+      <h1>Games</h1>
+      <div
+        id="gameContainer"
+        rel="grow"
+        style="font-family: Ubuntu, sans-serif; font-weight: bold"
+      >
+        <span style="font-family: Ubuntu, sans-serif">
+          <strong> Loading Games...</strong>
+        </span>
+      </div>
+
+      <div id="snackbar">HOLD CTRL AND RELOAD AFTER A UPDATE!</div>
+      <script>
+        function updatetoast() {
+          var x = document.getElementById("snackbar");
+          x.className = "show";
+          setTimeout(function () {
+            x.className = x.className.replace("show", "");
+          }, 3000);
+        }
+        updatetoast();
+      </script>
+      <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@widgetbot/crate@3" async defer>
+        new Crate({
+            server: '1128826318813921350', // Nativegames.net
+            channel: '1197413967233044621'
+        })
+      </script>
+    </main>
+  </body>
+</html>
+<style>
+  #snackbar {
+    visibility: hidden;
+    background-color: var(--background-filter);
+    backdrop-filter: var(--background-filter);
+    -webkit-backdrop-filter: var(--background-filter);
+    color: var(--textcolor);
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 100;
+    bottom: 30px;
+    font-size: 17px;
+    border-radius: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 900;
+  }
+
+  #snackbar.show {
+    visibility: visible;
+    -webkit-animation:
+      fadein 0.5s,
+      fadeout 0.5s 2.5s;
+    animation:
+      fadein 0.5s,
+      fadeout 0.5s 2.5s;
+  }
+
+  @-webkit-keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      bottom: 0;
+      opacity: 0;
+    }
+    to {
+      bottom: 30px;
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadeout {
+    from {
+      bottom: 30px;
+      opacity: 1;
+    }
+    to {
+      bottom: 0;
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  function showCustomMenu(x, y) {
+    var menu = document.getElementById("customMenu");
+
+    // Calculate maximum bounds
+    var maxX = window.innerWidth - menu.offsetWidth;
+    var maxY = window.innerHeight - menu.offsetHeight;
+
+    // Adjust position to stay within bounds
+    var adjustedX = Math.min(x, maxX);
+    var adjustedY = Math.min(y, maxY);
+
+    menu.style.left = adjustedX + "px";
+    menu.style.top = adjustedY + "px";
+    menu.style.display = "block";
+
+    // Close the menu when clicking outside of it
+    document.addEventListener("click", function closeMenu(event) {
+      if (!event.target.closest(".custom-menu")) {
+        hideCustomMenu();
+        document.removeEventListener("click", closeMenu);
+      }
+    });
+  }
+
+  function hideCustomMenu() {
+    var menu = document.getElementById("customMenu");
+    menu.style.display = "none";
+  }
+
+  function customAction(action) {
+    alert("Selected: " + action);
+    hideCustomMenu();
+  }
+
+  document.addEventListener("contextmenu", function (event) {
+    event.preventDefault();
+    showCustomMenu(event.clientX, event.clientY);
+  });
+</script>
